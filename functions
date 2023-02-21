@@ -184,10 +184,13 @@ service_import() {
   dokku_log_info2 "Service import debug, DATABASE_NAME $DATABASE_NAME"
   dokku_log_info2 "Service import debug, PASSWORD $PASSWORD"
 
+  dokku_log_info2 "Service import debug, command:"
+  dokku_log_info2 "mongorestore -u \"$SERVICE\" -p \"$PASSWORD\" --authenticationDatabase \"$DATABASE_NAME\" --gzip --archive --nsFrom '\$db\$.\$coll\$' --nsTo '$DATABASE_NAME.\$coll\$'"
+
   if [[ -t 0 ]]; then
     dokku_log_fail "No data provided on stdin."
   fi
-  "$DOCKER_BIN" container exec -i "$SERVICE_NAME" bash -c "mongorestore -u \"$SERVICE\" -p \"$PASSWORD\" --authenticationDatabase=admin \"$DATABASE_NAME\" --gzip --archive --nsFrom '\$db\$.\$coll\$' --nsTo '$DATABASE_NAME.\$coll\$'"
+  "$DOCKER_BIN" container exec -i "$SERVICE_NAME" bash -c "mongorestore -u \"$SERVICE\" -p \"$PASSWORD\" --authenticationDatabase \"$DATABASE_NAME\" --gzip --archive --nsFrom '\$db\$.\$coll\$' --nsTo '$DATABASE_NAME.\$coll\$'"
 }
 
 service_start() {
