@@ -179,6 +179,11 @@ service_import() {
   local DATABASE_NAME="$(get_database_name "$SERVICE")"
   local PASSWORD="$(service_password "$SERVICE")"
 
+  dokku_log_info2 "Service import debug, SERVICE $SERVICE"
+  dokku_log_info2 "Service import debug, SERVICE_NAME $SERVICE_NAME"
+  dokku_log_info2 "Service import debug, DATABASE_NAME $DATABASE_NAME"
+  dokku_log_info2 "Service import debug, PASSWORD $PASSWORD"
+
   if [[ -t 0 ]]; then
     dokku_log_fail "No data provided on stdin."
   fi
